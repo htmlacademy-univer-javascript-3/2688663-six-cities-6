@@ -37,7 +37,14 @@ function App({offersCount}: AppProps) {
                 />
                 <Route
                     path = {AppRoute.Login}
-                    element = {<LoginScreen/>}
+                    element = {
+                        <ProtectedRoute
+                            restrictedFor={AuthorizationStatus.Auth}
+                            redirectTo={AppRoute.Root}
+                        >
+                            <LoginScreen />
+                        </ProtectedRoute>
+                    }
                 />
                 <Route
                     path = {`${AppRoute.Offer}/:offerId`}
