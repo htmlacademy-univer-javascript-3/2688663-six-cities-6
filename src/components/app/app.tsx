@@ -51,6 +51,10 @@ function App({offersCount}: AppProps) {
                     element = {<OfferScreen/>}
                 />
                 <Route
+                    path={AppRoute.NotFound}
+                    element={<NotFoundScreen />}
+    />
+                <Route
                     path='*'
                     element= {<NotFoundScreen/>}
                 />

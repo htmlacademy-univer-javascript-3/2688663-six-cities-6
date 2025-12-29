@@ -1,87 +1,62 @@
-import { useEffect, useRef } from "react";
-import { Icon, layerGroup, Marker } from 'leaflet';
+import { useRef, useEffect } from 'react';
+import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-import { OfferPreview } from "../../types/offer-preview";
-import { Location } from "../../types/location";
+import { OfferPreview } from '../../types/offer-preview';
+import useMap from '../../hooks/use-map';
+import { DEFAULT_CUSTOM_ICON, CURRENT_CUSTOM_ICON } from '../../const';
+import './map.css';
 
-import useMap from "../../hooks/use-map";
-
-type IconConfig = {
-    url: string;
-    width: number;
-    height: number;
-    anchorX: number;
-    anchorY: number;
-};
 
 type MapProps = {
-    block: string;
-    location: Location;
-    offers: OfferPreview[];
-    specialOfferId: OfferPreview['id'] | null;
+  offers: OfferPreview[];
+  block: string;
+  selectedOfferId?: OfferPreview['id'] | null;
+  currentOffer?: OfferPreview | null;
 };
 
-const defaultIconConfig: IconConfig = {
-    url: '/img/pin-active.svg',
-    width: 28, 
-    height: 40, 
-    anchorX: 14, 
-    anchorY: 40,
-};
+function Map({offers, block, selectedOfferId, currentOffer}: MapProps) {
+  const mapRef = useRef(null);
+  const isOfferMap = block === 'offer__map';
 
-const activeIconConfig: IconConfig = {
-    url: '/img/pin.svg',
-    width: 28, 
-    height: 40, 
-    anchorX: 14, 
-    anchorY: 40,
-};
+  const centerPoint = isOfferMap && currentOffer
+    ? currentOffer.location
+    : offers[0].city.location;
 
-function createIcon(config: IconConfig) {
-    return new Icon ({
-        iconUrl: config.url,
-        iconSize: [config.width, config.height],
-        iconAnchor: [config.anchorX, config.anchorY],
-    });
+  const map = useMap(mapRef, centerPoint);
+
+  useEffect(() => {
+    if (map) {
+      map.setView([centerPoint.latitude, centerPoint.longitude], centerPoint.zoom);
+
+      const markerGroup = leaflet.layerGroup().addTo(map);
+
+      const offersToRender = isOfferMap && currentOffer
+        ? [currentOffer, ...offers]
+        : offers;
+
+      offersToRender.forEach((offer) => {
+        const marker = leaflet.marker(
+          {
+            lat: offer.location.latitude,
+            lng: offer.location.longitude,
+          },
+          {
+            icon: offer.id === selectedOfferId || offer.id === currentOffer?.id ? CURRENT_CUSTOM_ICON : DEFAULT_CUSTOM_ICON,
+          }
+        );
+        marker.addTo(markerGroup);
+      });
+
+      return () => {
+        map.removeLayer(markerGroup);
+      };
+    }
+  }, [map, isOfferMap, offers, selectedOfferId, currentOffer, centerPoint.latitude, centerPoint.longitude, centerPoint.zoom]);
+
+  return (
+    <section className={`${block} map ${isOfferMap ? 'map--offer' : ''}`} ref={mapRef}></section>
+  );
 }
 
-function Map ({block, location, offers, specialOfferId}: MapProps) {
-    const mapRef = useRef(null);
-    const map = useMap(mapRef, location);
-
-    useEffect(() => {
-        if (map) {
-            map.setView([location.latitude, location.longitude], location.zoom);
-        }
-    }, [map, location]);
-
-    useEffect(() => {
-        if (map) {
-            const markerLayer = layerGroup().addTo(map);
-
-            offers.forEach((offer) => {
-                const marker = new Marker({
-                    lat: offer.location.latitude,
-                    lng: offer.location.longitude,
-                });
-
-                marker
-                    .setIcon(
-                        offer.id === specialOfferId
-                            ? createIcon (activeIconConfig)
-                            : createIcon (defaultIconConfig)
-                    )
-                    .addTo(markerLayer);       
-            });
-
-            return () => {
-                map.removeLayer(markerLayer);
-            };
-        }
-    }, [map, offers, specialOfferId]);
-
-    return <section className={`${block}__map map`} ref={mapRef} />;
-}
-
-export default Map
+export default Map;

@@ -1,4 +1,8 @@
-import PlaceCard from '../../components/place-card.tsx/place-card';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+
+import PlaceCard from '../../components/place-card/place-card';
 
 
 type MainScreenProps = {
