@@ -1,25 +1,24 @@
-import { Navigate } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
-import { AppRoute, AuthorizationStatus } from "../../const";
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { selectAuthorizationStatus } from '../../store/user/selectors';
+import Spinner from '../spinner/spinner'; // Лучше оставить спиннер
 
 type ProtectedRouteProps = {
-    restrictedFor: AuthorizationStatus;
-    redirectTo: AppRoute; 
-    children: JSX.Element;
-}
+  children: JSX.Element;
+};
 
-function ProtectedRoute({
-    restrictedFor,
-    redirectTo, 
-    children,
-}: ProtectedRouteProps) {
-    const authorizationStatus = AuthorizationStatus.NoAuth;
+function ProtectedRoute({ children }: ProtectedRouteProps) {
+  const authorizationStatus = useSelector(selectAuthorizationStatus);
 
-    return restrictedFor === authorizationStatus ? (
-        <Navigate to={redirectTo} />
-    ) : (
-        children
-    );
+  if (authorizationStatus === AuthorizationStatus.Unknown) {
+    return <Spinner />; 
+  }
+
+  return authorizationStatus === AuthorizationStatus.Auth 
+    ? children 
+    : <Navigate to={AppRoute.Login} />;
 }
 
 export default ProtectedRoute;

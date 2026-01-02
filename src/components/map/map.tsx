@@ -5,7 +5,6 @@ import 'leaflet/dist/leaflet.css';
 import { OfferPreview } from '../../types/offer-preview';
 import useMap from '../../hooks/use-map';
 import { DEFAULT_CUSTOM_ICON, CURRENT_CUSTOM_ICON } from '../../const';
-import './map.css';
 
 
 type MapProps = {
