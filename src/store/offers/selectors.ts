@@ -4,7 +4,7 @@ import { RootState } from '..';
 import { SortingType } from '../../const';
 import { Offer } from '../../types/offer';
 import { sortOffers } from '../../utils/sorts';
-import { sortByNearestOffers } from '../../utils/scripts';
+import { NearestOffers } from '../../utils/common';
 
 export const selectCity = (state: RootState) => state.offers.city;
 export const selectOffers = (state: RootState) => state.offers.offers;
@@ -36,5 +36,5 @@ export const selectOffersNearbyByOffer = (
     if (!offer) {
       return [];
     }
-    return sortByNearestOffers(offers, offer).slice(0, limit);
+    return NearestOffers(offers, offer).slice(0, limit);
   });

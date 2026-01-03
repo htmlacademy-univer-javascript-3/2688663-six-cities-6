@@ -1,4 +1,4 @@
-import styles from '.spinner.module.css'
+import styles from './spinner.module.css'
 import spinner from './spinner.png';
 
 export default function Spinner() {
