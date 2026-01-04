@@ -150,7 +150,6 @@ type OfferDetailsProps = {
               </div>
             </div>
             <section className="offer__reviews reviews">
-            return (
                 <>
                 <h2 className="reviews__title">
                     Reviews &middot; <span className="reviews__amount">{reviewCount}</span>
@@ -161,7 +160,6 @@ type OfferDetailsProps = {
                     ))}
                 </ul>
                 </>
-                );
 
               {isAuth && <OfferPageForm offerId={offer.id} />}
             </section>
