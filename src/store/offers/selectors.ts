@@ -20,7 +20,7 @@ export const selectOffersByCity = createSelector(
   selectOffers,
   selectCity,
   (offers, city) =>
-    offers.filter((offer) => offer.city.name === city.toString())
+    offers.filter((offer) => offer.city.name === city)
 );
 
 export const selectSortedOffers = (sortOption: SortingType) =>

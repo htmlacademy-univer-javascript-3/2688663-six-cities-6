@@ -11,9 +11,9 @@ import { selectCity, selectSortedOffers } from '../../store/offers/selectors';
 
 function MainPageCities() {
   const [hoveredCardId, setHoveredCardId] = useState<OfferPreview['id'] | null>(null);
-  
+
   const [currentSortOption, setCurrentSortOption] = useState(SortingType.Popular);
-  
+
   const [isSortingOpen, setIsSortingOpen] = useState(false);
 
   const city = useSelector(selectCity);
@@ -38,22 +38,22 @@ function MainPageCities() {
         <section className="cities__places places">
           <h2 className="visually-hidden">Places</h2>
           <b className="places__found">
-          {sortedOffers.length} place{addPluralEnding(sortedOffers.length)} to stay in {city}
+            {sortedOffers.length} place{addPluralEnding(sortedOffers.length)} to stay in {city}
           </b>
-          
+
           <form className="places__sorting" action="#" method="get">
             <span className="places__sorting-caption">Sort by&nbsp;</span>
-            <span 
-              className="places__sorting-type" 
-              tabIndex={0} 
-              onClick={handleSortTypeClick} 
+            <span
+              className="places__sorting-type"
+              tabIndex={0}
+              onClick={handleSortTypeClick}
               style={{ userSelect: 'none' }}
             >
               {currentSortOption}
-              <svg 
-                className="places__sorting-arrow" 
-                width="7" 
-                height="4" 
+              <svg
+                className="places__sorting-arrow"
+                width="7"
+                height="4"
                 style={{ transform: `translateY(-50%) ${isSortingOpen ? 'rotate(180deg)' : ''}`}}
               >
                 <use xlinkHref="#icon-arrow-select"></use>

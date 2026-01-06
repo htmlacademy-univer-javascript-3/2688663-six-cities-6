@@ -13,11 +13,11 @@ function ProtectedRoute({ children }: ProtectedRouteProps) {
   const authorizationStatus = useSelector(selectAuthorizationStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown) {
-    return <Spinner />; 
+    return <Spinner />;
   }
 
-  return authorizationStatus === AuthorizationStatus.Auth 
-    ? children 
+  return authorizationStatus === AuthorizationStatus.Auth
+    ? children
     : <Navigate to={AppRoute.Login} />;
 }
 

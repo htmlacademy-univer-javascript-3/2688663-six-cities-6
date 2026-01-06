@@ -18,6 +18,11 @@ function LoginScreen() {
   const dispatch: AppDispatchType = useDispatch();
   const isAuth = useSelector(selectIsAuth);
   const isError = useSelector(selectIsError);
+  const serverError = useSelector(selectServerError);
+
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const cities: CityName[] = Object.values(CityName);
   const [randomCity] = useState(
@@ -27,11 +32,6 @@ function LoginScreen() {
   if (isAuth) {
     return <Navigate to={AppRoute.Root} />;
   }
-
-  const serverError = useSelector(selectServerError);
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
   const validatePassword = (pwd: string) => /[A-Za-z]/.test(pwd) && /\d/.test(pwd);
 
@@ -49,7 +49,6 @@ function LoginScreen() {
 
     dispatch(fetchLogin({ email, password }));
   };
-
 
 
   return (
@@ -108,19 +107,19 @@ function LoginScreen() {
                 Sign in
               </button>
             </form>
-            </section>
+          </section>
 
-            <section className="locations locations--login locations--current">
-              <div className="locations__item">
-                <Link
-                  className="locations__item-link"
-                  to={AppRoute.Root}
-                  onClick={() => dispatch(setCity(randomCity))}
-                >
-                  <span>{randomCity}</span>
-                </Link>
-              </div>
-            </section>
+          <section className="locations locations--login locations--current">
+            <div className="locations__item">
+              <Link
+                className="locations__item-link"
+                to={AppRoute.Root}
+                onClick={() => dispatch(setCity(randomCity))}
+              >
+                <span>{randomCity}</span>
+              </Link>
+            </div>
+          </section>
         </div>
       </main>
     </div>

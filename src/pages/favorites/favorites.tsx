@@ -31,35 +31,35 @@ function FavoritesPage() {
         <main className={`page__main page__main--favorites ${!hasOffers && 'page__main--favorites-empty'}`}>
           <div className="page__favorites-container container">
             {hasOffers ? (
-                <section className="favorites">
+              <section className="favorites">
                 <h1 className="favorites__title">Saved listing</h1>
                 <ul className="favorites__list">
-                    {Object.entries(groupingCitiesOffer).map(([city, cityOffers]) => (
-                      <li className="favorites__locations-items" key={city}>
-                        <div className="favorites__locations locations locations--current">
-                          <div className="locations__item">
-                            <Link
-                              className="locations__item-link"
-                              to={AppRoute.Root}
-                              onClick={() => dispatch(setCity(city as CityName))}
-                            >
-                              <span>{city}</span>
-                            </Link>
-                          </div>
+                  {Object.entries(groupingCitiesOffer).map(([city, cityOffers]) => (
+                    <li className="favorites__locations-items" key={city}>
+                      <div className="favorites__locations locations locations--current">
+                        <div className="locations__item">
+                          <Link
+                            className="locations__item-link"
+                            to={AppRoute.Root}
+                            onClick={() => dispatch(setCity(city as CityName))}
+                          >
+                            <span>{city}</span>
+                          </Link>
                         </div>
-                        <div className="favorites__places">
-                          {cityOffers.map((offer) => (
-                            <FavoritesPageCard key={offer.id} offer={offer} />
-                          ))}
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
+                      </div>
+                      <div className="favorites__places">
+                        {cityOffers.map((offer) => (
+                          <FavoritesPageCard key={offer.id} offer={offer} />
+                        ))}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
               </section>
             ) : (
-            <FavoritesEmpty/>
+              <FavoritesEmpty/>
             )}
-          
+
           </div>
         </main>
       )}

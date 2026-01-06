@@ -23,7 +23,7 @@ const sizeMap: Record<CardImageSize, { width: string; height:string }> = {
   large: { width: '260', height: '200'},
 };
 
-function PlaceCard({ offer, block, size='large', onMouseHover }: CardProps) {
+function PlaceCard({ offer, block, size = 'large', onMouseHover }: CardProps) {
   const { isPremium, previewImage, id, price, title, type, isFavorite } = offer;
 
   const dispatch = useDispatch<AppDispatchType>();
@@ -54,12 +54,12 @@ function PlaceCard({ offer, block, size='large', onMouseHover }: CardProps) {
 
   return (
     <article className={`${block}__card place-card`}
-    {...(onMouseHover
-      ? {
-        onMouseEnter: mouseEnter,
-        onMouseLeave: mouseLeave,
-      }
-      : {})}
+      {...(onMouseHover
+        ? {
+          onMouseEnter: mouseEnter,
+          onMouseLeave: mouseLeave,
+        }
+        : {})}
     >
 
       {isPremium && (
@@ -69,10 +69,10 @@ function PlaceCard({ offer, block, size='large', onMouseHover }: CardProps) {
       )}
       <div className={`${block}__image-wrapper place-card__image-wrapper`}>
         <Link to ={`${AppRoute.Offer}/${id}`}>
-          <img 
-            className="place-card__image" 
-            src={previewImage}  
-            alt={title} 
+          <img
+            className="place-card__image"
+            src={previewImage}
+            alt={title}
             {...sizeMap[size]}
           />
         </Link>

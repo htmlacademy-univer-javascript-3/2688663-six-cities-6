@@ -1,5 +1,5 @@
-import { OfferPreview } from "./offer-preview";
-import { User } from "./user";
+import { OfferPreview } from './offer-preview';
+import { User } from './user';
 
 export type Offer = OfferPreview & {
     bedrooms: number;
