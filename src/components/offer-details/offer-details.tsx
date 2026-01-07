@@ -161,8 +161,9 @@ function OfferPageDetails({ offer, offersNearby }: OfferDetailsProps) {
             {isAuth && <OfferPageForm offerId={offer.id} />}
           </section>
         </div>
+        <Map currentOffer={offer} offers={offersNearby} block="offer__map" />
       </div>
-      <Map currentOffer={offer} offers={offersNearby} block="offer__map" />
+
     </section>
   );
 }
